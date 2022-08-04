@@ -8,9 +8,10 @@
         <entry key="app/src/main/res/drawable/rounded_button.xml" value="0.189" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28489583333333335" />
         <entry key="app/src/main/res/layout/fragment_create_account.xml" value="0.28489583333333335" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_setup_profile.xml" value="0.30052083333333335" />
-        <entry key="app/src/main/res/layout/fragment_welcome.xml" value="0.30052083333333335" />
+        <entry key="app/src/main/res/layout/fragment_welcome.xml" value="0.25" />
       </map>
     </option>
   </component>

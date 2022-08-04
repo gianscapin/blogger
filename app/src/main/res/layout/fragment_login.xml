@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.auth.LoginFragment">
+    tools:context=".ui.auth.login.LoginFragment">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Welcome!"
+        android:fontFamily="sans-serif"
         android:textColor="@color/black"
         android:layout_marginStart="15dp"
         android:textSize="34sp"
@@ -99,6 +100,13 @@
         android:textSize="16dp"
         android:textStyle="bold"
         app:cornerRadius="15dp" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"/>
 
 
 </LinearLayout>
