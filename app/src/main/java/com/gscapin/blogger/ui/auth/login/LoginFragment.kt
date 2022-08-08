@@ -19,12 +19,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private lateinit var binding: FragmentLoginBinding
-
+    val viewModel: AuthViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val viewModel: AuthViewModel by viewModels()
 
         binding = FragmentLoginBinding.bind(view)
 

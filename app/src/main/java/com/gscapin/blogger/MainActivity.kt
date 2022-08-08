@@ -6,6 +6,9 @@ import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.gscapin.blogger.core.hide
+import com.gscapin.blogger.core.show
 import com.gscapin.blogger.databinding.ActivityMainBinding
 import com.gscapin.blogger.presentation.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,5 +27,33 @@ class MainActivity : AppCompatActivity() {
 
         navController = navHostFragment.navController
 
+        binding.bottomNavigation.setupWithNavController(navController)
+
+        observeDestinationChange(navController)
+
+
+    }
+
+    private fun observeDestinationChange(navController: NavController) {
+        navController.addOnDestinationChangedListener{controller, destination, arguments ->
+            when(destination.id){
+                R.id.loginFragment -> {
+                    binding.bottomNavigation.hide()
+                }
+                R.id.createAccountFragment -> {
+                    binding.bottomNavigation.hide()
+                }
+                R.id.welcomeFragment -> {
+                    binding.bottomNavigation.hide()
+                }
+                R.id.setupProfileFragment -> {
+                    binding.bottomNavigation.hide()
+                }
+                else -> {
+                    binding.bottomNavigation.show()
+                }
+
+            }
+        }
     }
 }

@@ -1,7 +1,9 @@
 package com.gscapin.blogger.di
 
 import com.gscapin.blogger.data.remote.auth.AuthDataSource
+import com.gscapin.blogger.data.remote.home.HomeDataSource
 import com.gscapin.blogger.domain.auth.AuthRepoImpl
+import com.gscapin.blogger.domain.home.HomeRepoImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,4 +16,7 @@ object AppModule {
 
     @Singleton
     fun provideAuthRepository(dataSource: AuthDataSource) = AuthRepoImpl(dataSource)
+
+    @Singleton
+    fun provideHomeRepository(dataSource: HomeDataSource) = HomeRepoImpl(dataSource)
 }

@@ -131,4 +131,13 @@
         android:background="@drawable/rounded_button"
         android:text="LET'S GET STARTED"
         android:textColor="@color/white" />
+
+    <ProgressBar
+        android:id="@+id/progress_createAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        />
 </LinearLayout>
