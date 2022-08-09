@@ -63,5 +63,13 @@ class AuthDataSource @Inject constructor() {
         }
 
         user?.updateProfile(profileUpdates)?.await()
+
+        var userDb = FirebaseFirestore.getInstance().collection("users").document(user!!.uid).get().await()
+        userDb.toObject(User::class.java).let { userFirebase ->
+            userFirebase?.apply {
+                userPhotoUrl = downloadUrl
+            }
+        }
+        // falta saber si se guarda, sino set(userDb, SetOptions.merge())
     }
 }
