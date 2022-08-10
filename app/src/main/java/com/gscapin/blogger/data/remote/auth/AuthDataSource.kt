@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.gscapin.blogger.data.model.User
 import kotlinx.coroutines.tasks.await
@@ -43,13 +44,14 @@ class AuthDataSource @Inject constructor() {
     suspend fun updateProfile(imageBitMap: Bitmap) {
         val user = FirebaseAuth.getInstance().currentUser
 
-        val username =
-            user?.uid?.let {
-                FirebaseFirestore.getInstance().collection("users").document(it).get()
-                    .await().data?.get("username").toString()
-            }
+        val username = user?.uid?.let {
+            FirebaseFirestore.getInstance().collection("users").document(it).get()
+                .await().toObject(User::class.java)
+        }
 
-        val imageRef = FirebaseStorage.getInstance().reference.child("${user?.uid}/profile_picture")
+
+        val imageRef =
+            FirebaseStorage.getInstance().reference.child("${user?.uid}/profile_picture")
         val baos = ByteArrayOutputStream()
 
         imageBitMap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
@@ -58,18 +60,25 @@ class AuthDataSource @Inject constructor() {
             imageRef.putBytes(baos.toByteArray()).await().storage.downloadUrl.await().toString()
 
         val profileUpdates = userProfileChangeRequest {
-            displayName = username
             photoUri = Uri.parse(downloadUrl)
         }
 
         user?.updateProfile(profileUpdates)?.await()
 
-        var userDb = FirebaseFirestore.getInstance().collection("users").document(user!!.uid).get().await()
+        var userDb =
+            FirebaseFirestore.getInstance().collection("users").document(user!!.uid).get()
+                .await()
         userDb.toObject(User::class.java).let { userFirebase ->
             userFirebase?.apply {
                 userPhotoUrl = downloadUrl
             }
+            userFirebase?.let {
+                FirebaseFirestore.getInstance().collection("users").document(user.uid)
+                    .set(it, SetOptions.merge()).await()
+            }
         }
         // falta saber si se guarda, sino set(userDb, SetOptions.merge())
+
+
     }
 }

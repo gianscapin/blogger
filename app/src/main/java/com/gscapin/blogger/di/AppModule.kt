@@ -2,9 +2,11 @@ package com.gscapin.blogger.di
 
 import com.gscapin.blogger.data.remote.auth.AuthDataSource
 import com.gscapin.blogger.data.remote.home.HomeDataSource
+import com.gscapin.blogger.data.remote.post.PostDataSource
 import com.gscapin.blogger.data.remote.profile.ProfileDataSource
 import com.gscapin.blogger.domain.auth.AuthRepoImpl
 import com.gscapin.blogger.domain.home.HomeRepoImpl
+import com.gscapin.blogger.domain.post.PostRepoImpl
 import com.gscapin.blogger.domain.profile.ProfileRepoImpl
 import dagger.Module
 import dagger.Provides
@@ -24,4 +26,7 @@ object AppModule {
 
     @Singleton
     fun provideProfileRepository(dataSource: ProfileDataSource) = ProfileRepoImpl(dataSource)
+
+    @Singleton
+    fun providePostRepository(dataSource: PostDataSource) = PostRepoImpl(dataSource)
 }

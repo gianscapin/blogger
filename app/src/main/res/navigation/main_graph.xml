@@ -63,7 +63,11 @@
         android:id="@+id/postingFragment"
         android:name="com.gscapin.blogger.ui.posting.PostingFragment"
         android:label="fragment_posting"
-        tools:layout="@layout/fragment_posting" />
+        tools:layout="@layout/fragment_posting" >
+        <action
+            android:id="@+id/action_postingFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.gscapin.blogger.ui.profile.ProfileFragment"
