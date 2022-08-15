@@ -13,4 +13,10 @@
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="Profile"/>
+
+    <item
+        android:id="@+id/messageFragment2"
+        android:icon="@drawable/ic_baseline_message_24"
+        android:title="Messages"
+        />
 </menu>

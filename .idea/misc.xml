@@ -15,8 +15,9 @@
         <entry key="app/src/main/res/drawable/rounded_button.xml" value="0.189" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28489583333333335" />
         <entry key="app/src/main/res/layout/fragment_create_account.xml" value="0.28489583333333335" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.278912353515625" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_message.xml" value="0.2793777465820313" />
         <entry key="app/src/main/res/layout/fragment_posting.xml" value="0.30052083333333335" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.30052083333333335" />
         <entry key="app/src/main/res/layout/fragment_setup_profile.xml" value="0.30052083333333335" />
