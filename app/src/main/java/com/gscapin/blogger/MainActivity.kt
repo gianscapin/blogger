@@ -49,6 +49,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.setupProfileFragment -> {
                     binding.bottomNavigation.hide()
                 }
+                R.id.userProfileFragment -> {
+                    binding.bottomNavigation.hide()
+                }
                 else -> {
                     binding.bottomNavigation.show()
                 }

@@ -20,12 +20,13 @@ import com.gscapin.blogger.data.model.Post
 import com.gscapin.blogger.databinding.FragmentHomeBinding
 import com.gscapin.blogger.presentation.home.HomeViewModel
 import com.gscapin.blogger.ui.home.adapter.HomeAdapter
+import com.gscapin.blogger.ui.home.adapter.OnNameClickListener
 import com.gscapin.blogger.ui.home.adapter.OnPostClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home), OnPostClickListener {
+class HomeFragment : Fragment(R.layout.fragment_home), OnPostClickListener, OnNameClickListener {
 
     private lateinit var binding: FragmentHomeBinding
     val viewModel: HomeViewModel by viewModels()
@@ -92,7 +93,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnPostClickListener {
                     } else {
                         binding.postsEmpty.visibility = View.GONE
                     }
-                    binding.rvHome.adapter = HomeAdapter(result.data, this@HomeFragment)
+                    binding.rvHome.adapter = HomeAdapter(result.data, this@HomeFragment, onNameClickListener = this@HomeFragment)
                     edit?.putString("postSP",result.data.toString())
                     edit?.commit()
                 }
@@ -136,5 +137,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnPostClickListener {
                 }
             }
         })
+    }
+
+    override fun onNameButtonClick(post: Post) {
+        Log.d("user", post.poster.toString())
+        val action = post.poster?.uid?.let {
+            HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(
+                it
+            )
+        }
+        if (action != null) {
+            findNavController().navigate(action)
+        }
     }
 }

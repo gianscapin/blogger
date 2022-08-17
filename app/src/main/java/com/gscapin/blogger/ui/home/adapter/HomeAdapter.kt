@@ -14,13 +14,16 @@ import com.gscapin.blogger.databinding.PostItemBinding
 
 class HomeAdapter(
     private val postList: List<Post>,
-    private val onPostClickListener: OnPostClickListener
+    private val onPostClickListener: OnPostClickListener,
+    private val onNameClickListener: OnNameClickListener
 ) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     private var postClickListener: OnPostClickListener? = null
+    private var nameClickListener: OnNameClickListener? = null
 
     init {
         postClickListener = onPostClickListener
+        nameClickListener = onNameClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
@@ -39,11 +42,18 @@ class HomeAdapter(
             setCounterLikes(item)
             setDescription(item)
             likeClickAction(item)
+            nameClickAction(item)
         }
 
         private fun setTimestamp(item: Post) {
             val time = item.createdAt?.time?.div(1000L)?.toInt()
             itemBinding.timePost.text = time?.let { TimeAgo.getTime(it) }
+        }
+
+        private fun nameClickAction(item: Post){
+            itemBinding.headerPost.setOnClickListener {
+                nameClickListener?.onNameButtonClick(item)
+            }
         }
 
         private fun likeClickAction(item: Post) {
@@ -111,4 +121,8 @@ class HomeAdapter(
 
 interface OnPostClickListener {
     fun onLikeButtonClick(post: Post, liked: Boolean)
+}
+
+interface OnNameClickListener{
+    fun onNameButtonClick(post: Post)
 }

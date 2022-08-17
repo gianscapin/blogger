@@ -53,13 +53,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/linearLayout">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/photo_user"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@drawable/circle"
             android:gravity="center"
-            android:scaleType="center"
             android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"
              />
@@ -117,7 +115,7 @@
             android:scaleType="center"
             android:src="@drawable/ic_baseline_area_chart_24" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"

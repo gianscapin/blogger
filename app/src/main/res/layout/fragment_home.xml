@@ -14,13 +14,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center"
                 app:title="Home"
+                style="@style/Widget.Material3.Toolbar.OnSurface"
                 tools:ignore="MissingConstraints" />
 
             <ImageView

@@ -58,6 +58,9 @@
         <action
             android:id="@+id/action_homeFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/postingFragment"
@@ -78,4 +81,13 @@
         android:name="com.gscapin.blogger.ui.messages.MessageFragment"
         android:label="fragment_message"
         tools:layout="@layout/fragment_message" />
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.gscapin.blogger.ui.profile.UserProfileFragment"
+        android:label="fragment_user_profile"
+        tools:layout="@layout/fragment_user_profile" >
+        <argument
+            android:name="idUser"
+            app:argType="string" />
+    </fragment>
 </navigation>
