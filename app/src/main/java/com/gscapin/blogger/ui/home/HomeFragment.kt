@@ -2,11 +2,14 @@ package com.gscapin.blogger.ui.home
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -34,6 +37,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnPostClickListener, OnNa
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        //activity?.window?.statusBarColor= Color.WHITE
         super.onViewCreated(view, savedInstanceState)
 
         val sharedPreference =  activity?.getSharedPreferences("POSTS_BLOG", Context.MODE_PRIVATE)
@@ -143,7 +147,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnPostClickListener, OnNa
         Log.d("user", post.poster.toString())
         val action = post.poster?.uid?.let {
             HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(
-                it
+                idUser = it,
+                photoUrl = post.poster.profilePicture,
+                nameUser = post.poster.username
             )
         }
         if (action != null) {

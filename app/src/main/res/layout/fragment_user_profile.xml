@@ -25,13 +25,14 @@
                 style="@style/Widget.Material3.Toolbar.OnSurface"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/purple_700"
+                android:background="@color/backgroundBlue"
                 android:gravity="center"
                 app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-                app:navigationIconTint="@color/white"
+                app:navigationIconTint="@color/black"
                 app:title="User"
-                app:titleTextColor="@color/white"
-                tools:ignore="MissingConstraints" />
+                app:titleTextColor="@color/black"
+                tools:ignore="MissingConstraints"
+                app:titleTextAppearance="@style/TextAppearance.Material3.ActionBar.Subtitle"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
@@ -39,8 +40,8 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/purple_700"
+        android:layout_height="280dp"
+        android:background="@color/backgroundBlue"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,8 +56,10 @@
         android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_marginHorizontal="20dp"
         android:layout_marginTop="80dp"
+        app:strokeColor="@color/black"
+        app:strokeWidth="10dp"
+        android:layout_marginHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -65,7 +68,10 @@
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardCornerRadius="30dp">
+            android:backgroundTint="@color/backgroundBlue"
+            app:cardElevation="20dp"
+            app:strokeColor="@color/black"
+            app:strokeWidth="10dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/photo_user"
@@ -81,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="45dp"
+                android:layout_marginTop="25dp"
                 android:gravity="center"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -94,7 +100,9 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="95dp"
-                android:text="Add friend" />
+                android:text="Follow"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black" />
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
@@ -112,34 +120,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
 
-        <ImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:background="@drawable/circle"
-            android:gravity="center"
-            android:scaleType="center"
-            android:src="@drawable/ic_baseline_area_chart_24" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="0dp"
+        <Button
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_weight="1"
-            android:text="Posts"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            style="@style/Widget.Material3.Button.TextButton.Dialog"
+            android:backgroundTint="@color/backgroundBlue"
+            android:text="See posts"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
+            android:drawableTint="@color/black"
+            />
 
 
     </LinearLayout>
 
     <Button
         android:id="@+id/send_message"
-        style="@style/Widget.Material3.Button"
+        style="@style/Widget.Material3.Button.TonalButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="180dp"
-        android:backgroundTint="@color/purple_700"
+        android:backgroundTint="@color/backgroundBlue"
         android:text="SEND A MESSAGE"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -7,4 +7,6 @@ import javax.inject.Singleton
 @Singleton
 interface MessageRepo {
     suspend fun getContactMessages(): Result<List<ContactMessage>>
+    suspend fun sendUserMessage(id: String)
+    suspend fun getContactMessagesFromCurrentUser(): Result<List<ContactMessage>>
 }

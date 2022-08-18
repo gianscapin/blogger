@@ -1,6 +1,6 @@
 package com.gscapin.blogger.data.model
 
 data class ContactMessage(
-    val users: List<User>,
+    val user: User? = null,
     val idMessage: String? = null
 )

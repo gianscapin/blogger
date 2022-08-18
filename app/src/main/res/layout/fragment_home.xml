@@ -18,16 +18,15 @@
                 android:id="@+id/toolbar_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:gravity="center"
                 app:title="Home"
-                style="@style/Widget.Material3.Toolbar.OnSurface"
+                app:titleTextAppearance="@style/TextAppearance.Material3.ActionBar.Title"
                 tools:ignore="MissingConstraints" />
 
             <ImageView
                 android:id="@+id/log_out"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_baseline_exit_to_app_24"
                 app:layout_constraintBottom_toBottomOf="@+id/toolbar_login"
@@ -48,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:indeterminateTint="@color/purple_500"
+            android:indeterminateTint="@color/teal_200"
             />
     </RelativeLayout>
 

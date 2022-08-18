@@ -128,9 +128,10 @@
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="30dp"
         android:height="55dp"
-        android:background="@drawable/rounded_button"
         android:text="LET'S GET STARTED"
-        android:textColor="@color/white" />
+        android:textColor="@color/black"
+        android:backgroundTint="@color/backgroundBlue"
+        />
 
     <ProgressBar
         android:id="@+id/progress_createAccount"

@@ -89,5 +89,11 @@
         <argument
             android:name="idUser"
             app:argType="string" />
+        <argument
+            android:name="photoUrl"
+            app:argType="string" />
+        <argument
+            android:name="nameUser"
+            app:argType="string" />
     </fragment>
 </navigation>

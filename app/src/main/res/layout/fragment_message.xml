@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/backgroundBlue"
     tools:context=".ui.messages.MessageFragment">
 
     <RelativeLayout
@@ -12,16 +13,20 @@
         android:layout_height="wrap_content">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:elevation="20dp"
+            app:elevation ="20dp">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@color/backgroundBlue"
                 android:gravity="center"
                 app:title="Messages"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="MissingConstraints"
+                android:elevation="20dp"
+                app:elevation ="20dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>

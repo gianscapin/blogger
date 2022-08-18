@@ -40,6 +40,7 @@
         android:textStyle="normal" />
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
@@ -49,7 +50,6 @@
         android:textColor="#03A9F4"
         app:boxCornerRadiusTopEnd="10dp"
         app:boxCornerRadiusTopStart="10dp"
-        app:boxStrokeColor="#03A9F4"
         app:startIconDrawable="@drawable/ic_baseline_email_24">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -62,6 +62,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
@@ -93,10 +94,9 @@
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="30dp"
         android:height="50dp"
-        android:background="@drawable/rounded_button"
-        android:backgroundTint="#2196F3"
+        android:backgroundTint="@color/backgroundBlue"
         android:text="LOG IN"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="16dp"
         android:textStyle="bold"
         app:cornerRadius="15dp" />

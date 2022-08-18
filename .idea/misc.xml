@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.308" />
         <entry key="app/src/main/res/drawable/rounded_button.xml" value="0.189" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28489583333333335" />
+        <entry key="app/src/main/res/layout/contact_item.xml" value="0.2994791666666667" />
         <entry key="app/src/main/res/layout/fragment_create_account.xml" value="0.28489583333333335" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.278912353515625" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />

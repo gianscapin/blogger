@@ -22,8 +22,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:itemTextColor="@color/purple_700"
-        app:itemIconTint="@color/purple_700"
-        app:menu="@menu/navigation_menu"/>
+        app:menu="@menu/navigation_menu"
+        android:background="@color/backgroundBlue"
+        android:elevation="10dp"
+        app:elevation="10dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
