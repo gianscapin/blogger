@@ -2,6 +2,7 @@ package com.gscapin.blogger
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -50,6 +51,9 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNavigation.hide()
                 }
                 R.id.userProfileFragment -> {
+                    binding.bottomNavigation.hide()
+                }
+                R.id.messageUserFragment -> {
                     binding.bottomNavigation.hide()
                 }
                 else -> {

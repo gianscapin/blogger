@@ -80,7 +80,11 @@
         android:id="@+id/messageFragment2"
         android:name="com.gscapin.blogger.ui.messages.MessageFragment"
         android:label="fragment_message"
-        tools:layout="@layout/fragment_message" />
+        tools:layout="@layout/fragment_message" >
+        <action
+            android:id="@+id/action_messageFragment2_to_messageUserFragment"
+            app:destination="@id/messageUserFragment" />
+    </fragment>
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.gscapin.blogger.ui.profile.UserProfileFragment"
@@ -95,5 +99,26 @@
         <argument
             android:name="nameUser"
             app:argType="string" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_messageUserFragment"
+            app:destination="@id/messageUserFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/messageUserFragment"
+        android:name="com.gscapin.blogger.ui.messages.MessageUserFragment"
+        android:label="fragment_message_user"
+        tools:layout="@layout/fragment_message_user" >
+        <argument
+            android:name="idUser"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="photoUser"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="nameUser"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

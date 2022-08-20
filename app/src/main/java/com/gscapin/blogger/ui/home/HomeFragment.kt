@@ -37,7 +37,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnPostClickListener, OnNa
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //activity?.window?.statusBarColor= Color.WHITE
+        activity?.window?.statusBarColor= Color.WHITE
         super.onViewCreated(view, savedInstanceState)
 
         val sharedPreference =  activity?.getSharedPreferences("POSTS_BLOG", Context.MODE_PRIVATE)

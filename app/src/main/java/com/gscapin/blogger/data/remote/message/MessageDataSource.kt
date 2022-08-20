@@ -33,13 +33,21 @@ class MessageDataSource @Inject constructor() {
         return com.gscapin.blogger.core.Result.Success(contactsMessagesList)
     }
 
-    suspend fun getContactMessagesFromCurrentUser(): Result<List<ContactMessage>>{
+    suspend fun getContactMessagesFromCurrentUser(): Result<List<ContactMessage>> {
         val currentUser = FirebaseAuth.getInstance().currentUser
 
-        val userDb = FirebaseFirestore.getInstance().collection("users").document(currentUser!!.uid).get().await()
+        val userDb =
+            FirebaseFirestore.getInstance().collection("users").document(currentUser!!.uid).get()
+                .await()
 
         userDb.toObject(User::class.java).let { userFirebase ->
-            return Result.Success(userFirebase?.contacts!!)
+            if (userFirebase?.contacts == null) {
+                val listEmpty: List<ContactMessage> = emptyList()
+                return Result.Success(listEmpty)
+            } else {
+                val contacts: List<ContactMessage> = userFirebase.contacts!!
+                return Result.Success(contacts!!)
+            }
         }
     }
 
@@ -65,14 +73,26 @@ class MessageDataSource @Inject constructor() {
             userDb.toObject(User::class.java).let { userFirebase ->
 
 
-                val listContacts = userFirebase!!.contacts?.toMutableList()
-                listContacts!!.add(contactMessage)
-                userFirebase.apply {
-                    contacts = listContacts
+                if (userFirebase?.contacts != null) {
+                    val listContacts = userFirebase!!.contacts?.toMutableList()
+                    listContacts!!.add(contactMessage)
+                    userFirebase.apply {
+                        contacts = listContacts
+                    }
+
+                    FirebaseFirestore.getInstance().collection("users").document(currentUser.uid)
+                        .set(userFirebase, SetOptions.merge()).await()
+                } else {
+                    val listContacts: MutableList<ContactMessage> = mutableListOf<ContactMessage>()
+                    listContacts.add(contactMessage)
+                    userFirebase?.apply {
+                        contacts = listContacts
+                    }
+
+                    FirebaseFirestore.getInstance().collection("users").document(currentUser.uid)
+                        .set(userFirebase!!, SetOptions.merge()).await()
                 }
 
-                FirebaseFirestore.getInstance().collection("users").document(currentUser.uid)
-                    .set(userFirebase, SetOptions.merge()).await()
 
             }
         }

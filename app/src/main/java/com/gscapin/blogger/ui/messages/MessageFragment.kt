@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.gscapin.blogger.R
 import com.gscapin.blogger.core.Result
 import com.gscapin.blogger.core.hide
@@ -59,7 +60,12 @@ class MessageFragment : Fragment(R.layout.fragment_message), OnContactClickListe
     }
 
     override fun onContactClickListener(contactMessage: ContactMessage) {
-        TODO("Not yet implemented")
+        val action = MessageFragmentDirections.actionMessageFragment2ToMessageUserFragment(
+            idUser = null,
+            photoUser = contactMessage.user?.userPhotoUrl,
+            nameUser = contactMessage.user?.username
+        )
+        findNavController().navigate(action)
     }
 
 }

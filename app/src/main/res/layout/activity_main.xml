@@ -11,6 +11,8 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/main_graph"
         tools:ignore="MissingConstraints" />
 
@@ -25,6 +27,6 @@
         app:menu="@menu/navigation_menu"
         android:background="@color/backgroundBlue"
         android:elevation="10dp"
-        app:elevation="10dp"/>
+        app:elevation="10dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
