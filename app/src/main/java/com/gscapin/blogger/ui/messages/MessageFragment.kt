@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.gscapin.blogger.R
 import com.gscapin.blogger.core.Result
 import com.gscapin.blogger.core.hide
@@ -60,10 +61,16 @@ class MessageFragment : Fragment(R.layout.fragment_message), OnContactClickListe
     }
 
     override fun onContactClickListener(contactMessage: ContactMessage) {
+
+        val myId = FirebaseAuth.getInstance().currentUser!!.uid
+
+        val userToGoChat = contactMessage.user!!.filter {
+            !it.id.equals(myId)
+        }.first()
         val action = MessageFragmentDirections.actionMessageFragment2ToMessageUserFragment(
-            idUser = null,
-            photoUser = contactMessage.user?.userPhotoUrl,
-            nameUser = contactMessage.user?.username
+            idUser = userToGoChat.id,
+            photoUser = userToGoChat.userPhotoUrl,
+            nameUser = userToGoChat.username
         )
         findNavController().navigate(action)
     }

@@ -2,6 +2,7 @@ package com.gscapin.blogger.ui.messages
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -24,6 +25,10 @@ class MessageUserFragment : Fragment(R.layout.fragment_message_user) {
         Glide.with(requireContext()).load(args.photoUser).centerCrop().into(binding.photoUser)
         binding.toolbarLogin.setNavigationOnClickListener {
             findNavController().popBackStack()
+        }
+
+        binding.sendMessageInput.addTextChangedListener{
+            binding.sendMessageButton.isEnabled = binding.sendMessageInput.text?.length!! >0
         }
     }
 }

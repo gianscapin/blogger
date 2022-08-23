@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.gscapin.blogger.core.BaseViewHolder
 import com.gscapin.blogger.data.model.ContactMessage
 import com.gscapin.blogger.databinding.ContactItemBinding
@@ -36,8 +37,12 @@ class MessageAdapter(
         }
 
         private fun setContactInfo(item: ContactMessage) {
-            Glide.with(context).load(item.user?.userPhotoUrl).centerCrop().into(itemBinding.contactImage)
-            itemBinding.nameContact.text = item.user?.username.toString()
+            val myId = FirebaseAuth.getInstance().currentUser!!.uid
+            val otherUser = item.user!!.filter {
+                !it.id.equals(myId)
+            }.first()
+            Glide.with(context).load(otherUser.userPhotoUrl).centerCrop().into(itemBinding.contactImage)
+            itemBinding.nameContact.text = otherUser.username.toString()
         }
 
     }
