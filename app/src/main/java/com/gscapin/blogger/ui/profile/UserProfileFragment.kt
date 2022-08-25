@@ -4,11 +4,8 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.ColorInt
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -67,7 +64,7 @@ class UserProfileFragment : Fragment(R.layout.fragment_user_profile) {
                     }
                     is Result.Success -> {
                         binding.progressBarSendMessage.hide()
-                        goToMessagesScreen()
+                        goToMessagesScreen(result.data)
                     }
                     is Result.Failure -> {
                         binding.progressBarSendMessage.hide()
@@ -82,11 +79,12 @@ class UserProfileFragment : Fragment(R.layout.fragment_user_profile) {
         }
     }
 
-    private fun goToMessagesScreen() {
+    private fun goToMessagesScreen(data: String) {
         val action = UserProfileFragmentDirections.actionUserProfileFragmentToMessageUserFragment(
             idUser = args.idUser,
             photoUser = args.photoUrl,
-            nameUser = args.nameUser
+            nameUser = args.nameUser,
+            idChat = data
         )
         findNavController().navigate(action)
     }

@@ -9,21 +9,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="assdsdadasdasdasdasdasdasdasdasdasd"
-        android:layout_gravity="right"
+        android:layout_gravity="left"
         android:layout_marginEnd="20dp"
         style="@style/Widget.Material3.Button.TextButton.Dialog"
         android:backgroundTint="@color/backgroundComplementary"
         android:textColor="@color/black"
+        android:visibility="gone"
         />
     <Button
         android:id="@+id/message_current_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="a"
-        android:layout_gravity="left"
+        android:layout_gravity="right"
         android:layout_marginEnd="20dp"
         style="@style/Widget.Material3.Button.TextButton.Dialog"
         android:backgroundTint="@color/backgroundBlue"
         android:textColor="@color/black"
+        android:visibility="gone"
         />
 </LinearLayout>

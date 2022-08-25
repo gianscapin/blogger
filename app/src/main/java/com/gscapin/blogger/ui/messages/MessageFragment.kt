@@ -70,7 +70,8 @@ class MessageFragment : Fragment(R.layout.fragment_message), OnContactClickListe
         val action = MessageFragmentDirections.actionMessageFragment2ToMessageUserFragment(
             idUser = userToGoChat.id,
             photoUser = userToGoChat.userPhotoUrl,
-            nameUser = userToGoChat.username
+            nameUser = userToGoChat.username,
+            idChat = contactMessage.idMessage
         )
         findNavController().navigate(action)
     }

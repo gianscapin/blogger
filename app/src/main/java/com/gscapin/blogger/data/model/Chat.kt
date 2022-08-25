@@ -4,6 +4,6 @@ import com.google.firebase.firestore.ServerTimestamp
 import java.util.*
 
 data class Chat(
-    val text: List<Message>? = null,
+    var text: List<Message>? = null,
     val user: List<User>? = null,
 )

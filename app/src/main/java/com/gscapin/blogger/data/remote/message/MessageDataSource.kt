@@ -1,5 +1,6 @@
 package com.gscapin.blogger.data.remote.message
 
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -7,10 +8,15 @@ import com.google.firebase.firestore.ktx.toObject
 import com.gscapin.blogger.core.Result
 import com.gscapin.blogger.data.model.Chat
 import com.gscapin.blogger.data.model.ContactMessage
+import com.gscapin.blogger.data.model.Message
 import com.gscapin.blogger.data.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 import javax.inject.Inject
 
 class MessageDataSource @Inject constructor() {
@@ -52,7 +58,7 @@ class MessageDataSource @Inject constructor() {
         }
     }
 
-    suspend fun sendUserMessage(id: String) {
+    suspend fun sendUserMessage(id: String): Result<String> {
         val currentUser = FirebaseAuth.getInstance().currentUser
 
         var userToMessaging =
@@ -68,7 +74,7 @@ class MessageDataSource @Inject constructor() {
             userDb.toObject(User::class.java).let { userFirebase ->
 
                 val existChat = isExistChat(userFirebase!!, userMessaging!!)
-                if (!existChat) {
+                if (existChat == null) {
                     val idChat =
                         createChatToDb(userFirebase!!, userMessaging!!, currentUser.uid, id)
 
@@ -131,6 +137,9 @@ class MessageDataSource @Inject constructor() {
                         FirebaseFirestore.getInstance().collection("users").document(id)
                             .set(userMessaging, SetOptions.merge()).await()
                     }
+                    return Result.Success(idChat)
+                }else{
+                    return Result.Success(existChat)
                 }
 
 
@@ -139,22 +148,25 @@ class MessageDataSource @Inject constructor() {
 
     }
 
-    private fun isExistChat(userFirebase: User, userMessaging: User): Boolean {
+
+    private fun isExistChat(userFirebase: User, userMessaging: User): String? {
         if (userFirebase.contacts != null && userMessaging.contacts != null) {
             val contactsCurrentUser = userFirebase.contacts
             val contactOtherUser = userMessaging.contacts
+            var chat: String
 
             for (contact in contactsCurrentUser!!) {
                 val idChat = contact.idMessage
                 for (contactOther in contactOtherUser!!) {
                     if (contactOther.idMessage == idChat) {
-                        return true
+                        chat = idChat!!
+                        return chat
                     }
                 }
             }
-            return false
+            return null
         } else {
-            return false
+            return null
         }
 
 
@@ -187,5 +199,43 @@ class MessageDataSource @Inject constructor() {
                 )
             )
         ).await().id
+    }
+
+    suspend fun sendMessage(text:String, idChat: String){
+
+        val chat = FirebaseFirestore.getInstance().collection("chat").document(idChat).get().await()
+        val currentUser = FirebaseAuth.getInstance().currentUser
+
+        chat.toObject(Chat::class.java).let { chatDb ->
+
+            var list = chatDb!!.text?.toMutableList()
+
+            list!!.add(Message(
+                text = text,
+                date = Timestamp.now().toDate(),
+                idUser = currentUser!!.uid
+            ))
+            chatDb.apply {
+                chatDb.text = list.toList()
+            }
+
+            FirebaseFirestore.getInstance().collection("chat").document(idChat)
+                .set(chatDb, SetOptions.merge()).await()
+        }
+
+    }
+
+    suspend fun getLastestMessages(idChat: String): Result<List<Message>>{
+        val messagesList:List<Message>
+
+        withContext(Dispatchers.IO){
+            val chat = FirebaseFirestore.getInstance().collection("chat").document(idChat).get().await()
+
+            chat.toObject(Chat::class.java).let { chatFromFirebase ->
+                messagesList = chatFromFirebase?.text!!
+            }
+        }
+
+        return Result.Success(messagesList)
     }
 }

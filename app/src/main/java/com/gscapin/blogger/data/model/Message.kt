@@ -5,6 +5,6 @@ import java.util.*
 
 data class Message(
     val text: String = "",
-    @ServerTimestamp
-    val date: Date? = null
+    val date: Date? = null,
+    val idUser: String = ""
 )
