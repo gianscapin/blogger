@@ -31,14 +31,12 @@
             android:textStyle="bold"
             tools:text="Gian"
             android:layout_marginStart="5dp"
-            android:textColor="@color/black"
             style="@style/TextAppearance.Material3.ActionBar.Subtitle"/>
         <TextView
             android:id="@+id/time_post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Hace 2 horas"
-            android:textColor="@color/black"
             />
     </LinearLayout>
     <ImageView

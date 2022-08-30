@@ -5,17 +5,22 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.color.MaterialColors
 import com.google.firebase.auth.FirebaseAuth
 import com.gscapin.blogger.R
 import com.gscapin.blogger.core.Result
@@ -27,6 +32,7 @@ import com.gscapin.blogger.ui.home.adapter.OnNameClickListener
 import com.gscapin.blogger.ui.home.adapter.OnPostClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import org.w3c.dom.Attr
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), OnPostClickListener, OnNameClickListener {
@@ -35,9 +41,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnPostClickListener, OnNa
     val viewModel: HomeViewModel by viewModels()
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        activity?.window?.statusBarColor= Color.WHITE
+        //activity?.window?.statusBarColor= Color.parseColor("#FAFAFA")
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        //requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        //requireActivity().window.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.black)
         super.onViewCreated(view, savedInstanceState)
 
         val sharedPreference =  activity?.getSharedPreferences("POSTS_BLOG", Context.MODE_PRIVATE)

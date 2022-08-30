@@ -47,14 +47,14 @@ class MessageDataSource @Inject constructor() {
             FirebaseFirestore.getInstance().collection("users").document(currentUser!!.uid).get()
                 .await()
 
-        userDb.toObject(User::class.java).let { userFirebase ->
-            if (userFirebase?.contacts == null) {
-                val listEmpty: List<ContactMessage> = emptyList()
-                return Result.Success(listEmpty)
-            } else {
-                val contacts: List<ContactMessage> = userFirebase.contacts!!
-                return Result.Success(contacts!!)
-            }
+        val user = userDb.toObject(User::class.java)
+
+        if(user!!.contacts == null){
+            val listEmpty: List<ContactMessage> = emptyList()
+            return Result.Success(listEmpty)
+        }else{
+            val contact = user.contacts
+            return Result.Success(contact!!)
         }
     }
 
@@ -69,83 +69,73 @@ class MessageDataSource @Inject constructor() {
             FirebaseFirestore.getInstance().collection("users").document(currentUser!!.uid).get()
                 .await()
 
+        val currentUserDb = userDb.toObject(User::class.java)
+        val otherUserDb = userToMessaging.toObject(User::class.java)
 
-        userToMessaging.toObject(User::class.java).let { userMessaging ->
-            userDb.toObject(User::class.java).let { userFirebase ->
+        val existChat = isExistChat(currentUserDb!!, otherUserDb!!)
 
-                val existChat = isExistChat(userFirebase!!, userMessaging!!)
-                if (existChat == null) {
-                    val idChat =
-                        createChatToDb(userFirebase!!, userMessaging!!, currentUser.uid, id)
+        if (existChat == null) {
+            val idChat =
+                createChatToDb(currentUserDb!!, otherUserDb!!, currentUser.uid, id)
+            val contactMessageCurrentUser = ContactMessage(
+                user = User(
+                    username = otherUserDb.username,
+                    email = otherUserDb.email,
+                    userPhotoUrl = otherUserDb.userPhotoUrl
+                ),
+                idMessage = idChat
+            )
+            val contactMessageOtherUser = ContactMessage(
+                user = User(
+                    username = currentUserDb.username,
+                    email = currentUserDb.email,
+                    userPhotoUrl = currentUserDb.userPhotoUrl
+                ),
+                idMessage = idChat
+            )
 
-                    val contactMessage = ContactMessage(
-                        user = listOf(
-                            User(
-                                username = userMessaging.username,
-                                email = userMessaging.email,
-                                userPhotoUrl = userMessaging.userPhotoUrl
-                            ),
-                            User(
-                                username = userFirebase.username,
-                                email = userFirebase.email,
-                                userPhotoUrl = userFirebase.userPhotoUrl
-                            )
-                        ),
-                        idMessage = idChat
-                    )
+            setContactMessageToUser(
+                user = currentUserDb,
+                contactMessage = contactMessageCurrentUser,
+                idUser = currentUser.uid
+            )
 
-                    if (userFirebase?.contacts != null) {
-                        val listContacts = userFirebase.contacts?.toMutableList()
-                        listContacts!!.add(contactMessage)
-                        userFirebase.apply {
-                            contacts = listContacts
-                        }
+            setContactMessageToUser(
+                user = otherUserDb,
+                contactMessage = contactMessageOtherUser,
+                idUser = id
+            )
 
-                        FirebaseFirestore.getInstance().collection("users")
-                            .document(currentUser.uid)
-                            .set(userFirebase, SetOptions.merge()).await()
-                    } else {
-                        val listContacts: MutableList<ContactMessage> =
-                            mutableListOf<ContactMessage>()
-                        listContacts.add(contactMessage)
-                        userFirebase.apply {
-                            contacts = listContacts
-                        }
+            return Result.Success(idChat)
 
-                        FirebaseFirestore.getInstance().collection("users")
-                            .document(currentUser.uid)
-                            .set(userFirebase, SetOptions.merge()).await()
-                    }
-
-                    if (userMessaging.contacts != null) {
-                        val listContacts = userMessaging.contacts?.toMutableList()
-                        listContacts!!.add(contactMessage)
-                        userMessaging.apply {
-                            contacts = listContacts
-                        }
-
-                        FirebaseFirestore.getInstance().collection("users").document(id)
-                            .set(userMessaging, SetOptions.merge()).await()
-                    } else {
-                        val listContacts: MutableList<ContactMessage> =
-                            mutableListOf<ContactMessage>()
-                        listContacts.add(contactMessage)
-                        userMessaging.apply {
-                            contacts = listContacts
-                        }
-
-                        FirebaseFirestore.getInstance().collection("users").document(id)
-                            .set(userMessaging, SetOptions.merge()).await()
-                    }
-                    return Result.Success(idChat)
-                }else{
-                    return Result.Success(existChat)
-                }
-
-
-            }
+        } else {
+            return Result.Success(existChat)
         }
 
+    }
+
+    private suspend fun setContactMessageToUser(
+        user: User,
+        contactMessage: ContactMessage,
+        idUser: String
+    ) {
+        if (user.contacts != null) {
+            val listContacts = user.contacts?.toMutableList()
+            listContacts!!.add(contactMessage)
+            user.apply {
+                contacts = listContacts
+            }
+        } else {
+            val listContacts: MutableList<ContactMessage> =
+                mutableListOf<ContactMessage>()
+            listContacts.add(contactMessage)
+            user.apply {
+                contacts = listContacts
+            }
+        }
+        FirebaseFirestore.getInstance().collection("users")
+            .document(idUser)
+            .set(user, SetOptions.merge()).await()
     }
 
 
@@ -201,7 +191,7 @@ class MessageDataSource @Inject constructor() {
         ).await().id
     }
 
-    suspend fun sendMessage(text:String, idChat: String){
+    suspend fun sendMessage(text: String, idChat: String) {
 
         val chat = FirebaseFirestore.getInstance().collection("chat").document(idChat).get().await()
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -210,11 +200,13 @@ class MessageDataSource @Inject constructor() {
 
             var list = chatDb!!.text?.toMutableList()
 
-            list!!.add(Message(
-                text = text,
-                date = Timestamp.now().toDate(),
-                idUser = currentUser!!.uid
-            ))
+            list!!.add(
+                Message(
+                    text = text,
+                    date = Timestamp.now().toDate(),
+                    idUser = currentUser!!.uid
+                )
+            )
             chatDb.apply {
                 chatDb.text = list.toList()
             }
@@ -225,11 +217,12 @@ class MessageDataSource @Inject constructor() {
 
     }
 
-    suspend fun getLastestMessages(idChat: String): Result<List<Message>>{
-        val messagesList:List<Message>
+    suspend fun getLastestMessages(idChat: String): Result<List<Message>> {
+        val messagesList: List<Message>
 
-        withContext(Dispatchers.IO){
-            val chat = FirebaseFirestore.getInstance().collection("chat").document(idChat).get().await()
+        withContext(Dispatchers.IO) {
+            val chat =
+                FirebaseFirestore.getInstance().collection("chat").document(idChat).get().await()
 
             chat.toObject(Chat::class.java).let { chatFromFirebase ->
                 messagesList = chatFromFirebase?.text!!

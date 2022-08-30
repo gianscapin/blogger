@@ -93,6 +93,7 @@ class PostingFragment : Fragment(R.layout.fragment_posting) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
         try {
+            binding.newPostPhoto.imageTintList = null
             getResult.launch(takePictureIntent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(

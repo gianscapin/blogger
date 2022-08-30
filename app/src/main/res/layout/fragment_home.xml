@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 app:title="Home"
-                app:titleTextAppearance="@style/TextAppearance.Material3.ActionBar.Title"
+                app:titleTextAppearance="@style/TextAppearance.Material3.ActionBar.Subtitle"
                 tools:ignore="MissingConstraints" />
 
             <ImageView
@@ -33,7 +33,9 @@
                 app:layout_constraintEnd_toEndOf="@+id/toolbar_login"
                 app:layout_constraintHorizontal_bias="0.918"
                 app:layout_constraintStart_toStartOf="@+id/toolbar_login"
-                app:layout_constraintTop_toTopOf="@+id/toolbar_login" />
+                app:layout_constraintTop_toTopOf="@+id/toolbar_login"
+                app:tint="?android:attr/colorPrimary"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
     <RelativeLayout

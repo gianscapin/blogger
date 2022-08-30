@@ -61,12 +61,7 @@ class MessageFragment : Fragment(R.layout.fragment_message), OnContactClickListe
     }
 
     override fun onContactClickListener(contactMessage: ContactMessage) {
-
-        val myId = FirebaseAuth.getInstance().currentUser!!.uid
-
-        val userToGoChat = contactMessage.user!!.filter {
-            !it.id.equals(myId)
-        }.first()
+        val userToGoChat = contactMessage.user!!
         val action = MessageFragmentDirections.actionMessageFragment2ToMessageUserFragment(
             idUser = userToGoChat.id,
             photoUser = userToGoChat.userPhotoUrl,

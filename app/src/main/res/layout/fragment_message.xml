@@ -25,6 +25,7 @@
                     android:layout_height="match_parent"
                     app:title="Messages"
                     tools:ignore="MissingConstraints"
+                    app:titleTextAppearance="@style/TextAppearance.Material3.ActionBar.Subtitle"
                     app:elevation="12dp"
                 />
             </com.google.android.material.appbar.AppBarLayout>
