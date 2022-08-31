@@ -43,7 +43,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnPostClickListener, OnNa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //activity?.window?.statusBarColor= Color.parseColor("#FAFAFA")
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         //requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         //requireActivity().window.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.black)
         super.onViewCreated(view, savedInstanceState)

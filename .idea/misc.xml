@@ -23,6 +23,7 @@
         <entry key="app/src/main/res/layout/fragment_posting.xml" value="0.30052083333333335" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.30052083333333335" />
         <entry key="app/src/main/res/layout/fragment_setup_profile.xml" value="0.30052083333333335" />
+        <entry key="app/src/main/res/layout/fragment_user_preferences.xml" value="0.28489583333333335" />
         <entry key="app/src/main/res/layout/fragment_user_profile.xml" value="0.30052083333333335" />
         <entry key="app/src/main/res/layout/fragment_welcome.xml" value="0.25" />
         <entry key="app/src/main/res/layout/messages.xml" value="0.2994791666666667" />

@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.gscapin.blogger.R
 import com.gscapin.blogger.core.Result
@@ -47,6 +48,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentProfileBinding.bind(view)
+
+        binding.btnPreferences.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_userPreferencesFragment)
+        }
 
         viewModel.getUserInfo().observe(viewLifecycleOwner, Observer { result ->
             when(result){
