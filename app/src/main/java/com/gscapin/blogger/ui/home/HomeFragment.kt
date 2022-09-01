@@ -1,6 +1,8 @@
 package com.gscapin.blogger.ui.home
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
@@ -21,6 +23,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.gscapin.blogger.R
 import com.gscapin.blogger.core.Result
@@ -47,21 +50,21 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnPostClickListener, OnNa
         //requireActivity().window.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.black)
         super.onViewCreated(view, savedInstanceState)
 
-        val sharedPreference =  activity?.getSharedPreferences("POSTS_BLOG", Context.MODE_PRIVATE)
+        val sharedPreference = activity?.getSharedPreferences("POSTS_BLOG", Context.MODE_PRIVATE)
         var edit = sharedPreference?.edit()
 
         binding = FragmentHomeBinding.bind(view)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 getPosts(edit)
-                viewModel.seeNewPosts.collect{result ->
-                    when(result){
+                viewModel.seeNewPosts.collect { result ->
+                    when (result) {
                         is Result.Loading -> {}
                         is Result.Success -> {
                             // usar shared preferences
                             val listPosts = getPostsSP(sharedPreference)
-                            if(result.data.toString() != listPosts!!){
+                            if (result.data.toString() != listPosts!!) {
                                 binding.refreshPosts.show()
                             }
                         }
@@ -104,8 +107,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnPostClickListener, OnNa
                     } else {
                         binding.postsEmpty.visibility = View.GONE
                     }
-                    binding.rvHome.adapter = HomeAdapter(result.data, this@HomeFragment, onNameClickListener = this@HomeFragment)
-                    edit?.putString("postSP",result.data.toString())
+                    binding.rvHome.adapter = HomeAdapter(
+                        result.data,
+                        this@HomeFragment,
+                        onNameClickListener = this@HomeFragment
+                    )
+                    edit?.putString("postSP", result.data.toString())
                     edit?.commit()
                 }
                 is Result.Failure -> {
@@ -123,31 +130,39 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnPostClickListener, OnNa
 
     private fun logOut() {
         binding.logOut.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            findNavController().navigate(R.id.action_homeFragment_to_welcomeFragment)
+            context?.let { it1 ->
+                MaterialAlertDialogBuilder(it1).setMessage("Desea cerrar sesión?")
+                    .setPositiveButton("Si", DialogInterface.OnClickListener { dialogInterface, i ->
+                        FirebaseAuth.getInstance().signOut()
+                        findNavController().navigate(R.id.action_homeFragment_to_welcomeFragment)
+                    })
+                    .setNegativeButton("No", null).show()
+            }
+
         }
     }
 
     private fun getPostsSP(sharedPreference: SharedPreferences?): String? {
-        val posts = sharedPreference?.getString("postSP","")
+        val posts = sharedPreference?.getString("postSP", "")
         return posts;
     }
 
 
     override fun onLikeButtonClick(post: Post, liked: Boolean) {
-        viewModel.likePost(postId = post.id, liked = liked).observe(viewLifecycleOwner, Observer { result ->
-            when(result){
-                is Result.Loading -> {}
-                is Result.Success -> {}
-                is Result.Failure -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Error like post ${result.exception}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+        viewModel.likePost(postId = post.id, liked = liked)
+            .observe(viewLifecycleOwner, Observer { result ->
+                when (result) {
+                    is Result.Loading -> {}
+                    is Result.Success -> {}
+                    is Result.Failure -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "Error like post ${result.exception}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            }
-        })
+            })
     }
 
     override fun onNameButtonClick(post: Post) {

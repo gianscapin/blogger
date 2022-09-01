@@ -1,14 +1,20 @@
 package com.gscapin.blogger.ui.messages.adapter
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.gscapin.blogger.core.BaseViewHolder
 import com.gscapin.blogger.core.show
 import com.gscapin.blogger.data.model.Message
 import com.gscapin.blogger.databinding.MessagesBinding
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
 
 class ChatMessageAdapter(
     private val messageFromChat: List<Message>
@@ -27,10 +33,12 @@ class ChatMessageAdapter(
             val currentUser = FirebaseAuth.getInstance().currentUser
             if(item.idUser == currentUser!!.uid){
                 itemBinding.messageCurrentUser.text = item.text
-                itemBinding.messageCurrentUser.show()
+                itemBinding.timeMessageCurrentUser.text = "${item.date?.hours.toString()}:${item.date?.minutes}"
+                itemBinding.layoutCurrentUser.show()
             }else{
-                itemBinding.messageUser.text = item.text
-                itemBinding.messageUser.show()
+                itemBinding.messageOtherUser.text = item.text
+                itemBinding.timeMessageUser.text = "${item.date?.hours.toString()}:${item.date?.minutes}"
+                itemBinding.layoutOtherUser.show()
             }
         }
 

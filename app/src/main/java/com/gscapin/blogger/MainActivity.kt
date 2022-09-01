@@ -1,5 +1,6 @@
 package com.gscapin.blogger
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -32,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setupWithNavController(navController)
 
         observeDestinationChange(navController)
-
 
     }
 

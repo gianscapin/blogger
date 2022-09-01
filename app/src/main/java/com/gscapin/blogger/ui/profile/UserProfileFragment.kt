@@ -28,7 +28,7 @@ class UserProfileFragment : Fragment(R.layout.fragment_user_profile) {
 
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        activity?.window?.statusBarColor= Color.parseColor("#E1F5FE")
+        //activity?.window?.statusBarColor= Color.parseColor("#E1F5FE")
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentUserProfileBinding.bind(view)
